@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/login/view/login_page.dart';
 import 'pages/reddit_page.dart';
 import 'pages/pubdev_page.dart';
 import 'pages/youtube_page.dart';
@@ -19,7 +20,7 @@ class FlutterExplorerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
