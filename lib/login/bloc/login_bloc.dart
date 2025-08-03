@@ -10,8 +10,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     on<OnLoginEvent>((event, emit) async {
       emit(LoginLoadingState());
+      await Future.delayed(Duration(seconds: 1));
       if (event.passCode == 'Update@2025') {
-        await Future.delayed(Duration(seconds: 1));
         emit(LoginSuccessState());
       } else {
         emit(LoginErrorState('Please check the passcode'));

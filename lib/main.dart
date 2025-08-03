@@ -6,7 +6,7 @@ import 'pages/youtube_page.dart';
 import 'pages/medium_page.dart';
 
 void main() {
-  runApp(const FlutterExplorerApp());
+  runApp(FlutterExplorerApp());
 }
 
 class FlutterExplorerApp extends StatelessWidget {
@@ -16,11 +16,12 @@ class FlutterExplorerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Explorer',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }
