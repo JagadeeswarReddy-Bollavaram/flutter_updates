@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:test_app/commonWidgets/filledButton.dart';
 import 'package:test_app/commonWidgets/textfield.dart';
 import 'package:test_app/login/bloc/login_bloc.dart';
 import 'package:test_app/login/bloc/login_bloc_events.dart';
 import 'package:test_app/login/bloc/login_bloc_state.dart';
 import 'package:test_app/main.dart';
+import 'package:test_app/signup/binding/signup_binding.dart';
+import 'package:test_app/signup/views/signup_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -83,9 +86,10 @@ class LoginPage extends StatelessWidget {
                                     if (check && value.length != 10) {
                                       return 'pls enter 10 digits';
                                     }
-                                    if (!(check && value.contains('@'))) {
+                                    if ((!check && !value.contains('@'))) {
                                       return 'pls enter valid email id';
                                     }
+                                    return null;
                                   }
                                 },
                                 hintText: 'email/number',
@@ -98,23 +102,38 @@ class LoginPage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.7,
                               child: AppTextField(
                                 controller: passcodeConroller,
+                                icon: true,
                                 obscureText: true,
                                 hintText: 'passCode',
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: AppFilledButton(
-                        onPressed: () {
-                          context.read<LoginBloc>().add(OnLoginEvent(
-                              userConroller.text, passcodeConroller.text));
-                        },
-                        label: 'Login',
-                      ),
+                    Column(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Get.to(SignupPage(), binding: SignupBinding());
+                          },
+                          child: Text(
+                            'Sign UP',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.blueAccent),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: AppFilledButton(
+                            onPressed: () {
+                              context.read<LoginBloc>().add(OnLoginEvent(
+                                  userConroller.text, passcodeConroller.text));
+                            },
+                            label: 'Login',
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),

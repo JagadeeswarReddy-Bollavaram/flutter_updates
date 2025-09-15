@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:test_app/login/view/login_page.dart';
-import 'package:test_app/signup/controller/signupController.dart';
-import 'package:test_app/signup/views/signup_page.dart';
+import 'package:test_app/utils/constants.dart';
+import 'package:test_app/utils/getClient.dart';
 import 'pages/reddit_page.dart';
 import 'pages/pubdev_page.dart';
 import 'pages/youtube_page.dart';
 import 'pages/medium_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  GlobalVariables.acc = CustomerAccount.account;
   runApp(FlutterExplorerApp());
 }
 
@@ -17,15 +19,14 @@ class FlutterExplorerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(Signupcontroller());
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Explorer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SignupPage(),
+      home: LoginPage(),
     );
   }
 }
