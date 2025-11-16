@@ -7,6 +7,7 @@ import 'pages/reddit_page.dart';
 import 'pages/pubdev_page.dart';
 import 'pages/youtube_page.dart';
 import 'pages/medium_page.dart';
+import 'pages/ai_interaction_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,7 @@ class FlutterExplorerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
@@ -46,13 +47,6 @@ class _HomePageState extends State<HomePage> {
     PubDevPage(),
     YouTubePage(),
     MediumPage(),
-  ];
-
-  static const List<String> _titles = [
-    'Reddit',
-    'pub.dev',
-    'YouTube',
-    'Medium',
   ];
 
   void _onItemTapped(int index) {
@@ -76,6 +70,21 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: _pages[_selectedIndex],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const AIInteractionHomePage()),
+          );
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.auto_awesome,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
