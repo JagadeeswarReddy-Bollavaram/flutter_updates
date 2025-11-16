@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.test_app"
+        applicationId = "com.flutter.updates"
         minSdk = 21  // Android 5.0 (Lollipop) - widely compatible
         targetSdk = 35  // Android 15 - latest stable
         compileSdk = 35

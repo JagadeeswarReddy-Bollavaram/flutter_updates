@@ -1,6 +1,8 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_app/main.dart';
+import 'package:test_app/utils/constants.dart';
 
 class Signupcontroller extends GetxController {
   Rx<bool> loading = false.obs;
@@ -65,7 +67,19 @@ class Signupcontroller extends GetxController {
   void onSubmitted(BuildContext context) async {
     if (formKey.currentState?.validate() ?? false) {
       isSubmitted.value = true;
-      await Future.delayed(Duration(seconds: 3));
+      register(context);
+    }
+  }
+
+  Future<void> register(BuildContext context) async {
+    await GlobalVariables.acc.create(
+        userId: ID.unique(),
+        email: "hari@gmail.com",
+        password: passCode.text,
+        name: nameController.text);
+    await GlobalVariables.acc.createEmailPasswordSession(
+        email: "hari@gmail.com", password: passCode.text);
+    if (await GlobalVariables.acc.get() != null) {
       await Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
     }

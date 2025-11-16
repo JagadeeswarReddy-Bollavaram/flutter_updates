@@ -14,11 +14,9 @@ class SignupPage extends GetView<Signupcontroller> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Sign In',
-          ),
-        ),
+        title: Text('Sign In',
+            style: TextStyle(
+                color: Colors.blueAccent, fontWeight: FontWeight.bold)),
       ),
       body: Form(
         key: controller.formKey,
@@ -163,8 +161,27 @@ class SignupPage extends GetView<Signupcontroller> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                    'Every saturday you will receive the flutter week Updates'),
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: 'Every ',
+                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                  TextSpan(
+                      text: 'Saturday',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold)),
+                  TextSpan(
+                      text: ' you will receive the ',
+                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                  TextSpan(
+                      text: 'flutter Updates',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold)),
+                ])),
               ],
             ),
           ),
