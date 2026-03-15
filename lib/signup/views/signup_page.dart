@@ -118,7 +118,7 @@ class SignupPage extends GetView<Signupcontroller> {
                               padding: EdgeInsets.symmetric(vertical: 20),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: AppTextField(
-                                title: "EMAIL",
+                                title: "EMAIL *",
                                 controller: controller.email,
                                 validation: (value) =>
                                     controller.emailValidation(value),

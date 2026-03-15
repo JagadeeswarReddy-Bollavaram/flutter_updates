@@ -8,6 +8,7 @@ import 'package:test_app/login/bloc/login_bloc_events.dart';
 import 'package:test_app/login/bloc/login_bloc_state.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/signup/binding/signup_binding.dart';
+import 'package:test_app/utils/validators.dart';
 import 'package:test_app/signup/views/signup_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -75,24 +76,8 @@ class LoginPage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.7,
                               child: AppTextField(
                                 controller: userConroller,
-                                validation: (value) {
-                                  if (value != null) {
-                                    bool check = value.runes.every(
-                                      (element) =>
-                                          element >= 48 && element <= 57,
-                                    );
-                                    if (check && value.length == 10)
-                                      return null;
-                                    if (check && value.length != 10) {
-                                      return 'pls enter 10 digits';
-                                    }
-                                    if ((!check && !value.contains('@'))) {
-                                      return 'pls enter valid email id';
-                                    }
-                                    return null;
-                                  }
-                                },
-                                hintText: 'email/number',
+                                validation: validateEmail,
+                                hintText: 'email',
                               ),
                             ),
                             SizedBox(

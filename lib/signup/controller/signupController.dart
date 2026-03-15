@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/utils/constants.dart';
+import 'package:test_app/utils/validators.dart';
 
 class Signupcontroller extends GetxController {
   Rx<bool> loading = false.obs;
@@ -37,19 +38,14 @@ class Signupcontroller extends GetxController {
     return null;
   }
 
-  String? emailValidation(String? value) {
-    if ((value?.contains('@') ?? false) && value!.endsWith('.com')) {
-      return "Pls enter vaild email Id";
-    }
-    return null;
-  }
+  String? emailValidation(String? value) => validateEmail(value);
 
   String? passCodeValidation(String? value) {
     if (value == null || value.isEmpty) {
       return "Pls Set the PassCode";
     }
-    if (value.length < 6) {
-      return "Make Sure PassCode is greater than 6 digits";
+    if (value.length < 8) {
+      return "PassCode must be at least 8 characters";
     }
     if (!['@', '#', '\$', '%', '^', '!'].any((e) => value.contains(e))) {
       return "MakeSure to have an special Character";
@@ -72,16 +68,39 @@ class Signupcontroller extends GetxController {
   }
 
   Future<void> register(BuildContext context) async {
-    await GlobalVariables.acc.create(
-        userId: ID.unique(),
-        email: "hari@gmail.com",
-        password: passCode.text,
-        name: nameController.text);
-    await GlobalVariables.acc.createEmailPasswordSession(
-        email: "hari@gmail.com", password: passCode.text);
-    if (await GlobalVariables.acc.get() != null) {
-      await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+    try {
+      await GlobalVariables.acc.create(
+          userId: ID.unique(),
+          email: email.text,
+          password: passCode.text,
+          name: nameController.text);
+      if (await GlobalVariables.acc.get() != null) {
+        await Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+    } on AppwriteException catch (e) {
+      isSubmitted.value = false;
+      final message = e.code == 409
+          ? 'An account with this email already exists.'
+          : e.message ?? 'Something went wrong. Please try again.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error_outline, color: Colors.white),
+              SizedBox(width: 10),
+              Expanded(
+                  child: Text(message, style: TextStyle(color: Colors.white))),
+            ],
+          ),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: EdgeInsets.all(16),
+          duration: Duration(seconds: 4),
+        ),
+      );
     }
   }
 }
